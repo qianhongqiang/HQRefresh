@@ -8,18 +8,68 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UITableViewDelegate {
+    
+    var dataSource : NSMutableArray?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.dataSource = NSMutableArray()
+        for index in 1...5 {
+            self.dataSource?.addObject("\(index)")
+        }
+        
+        self.view.backgroundColor = UIColor.yellowColor()
+        
+        var testTable : UITableView = UITableView(frame: self.view.bounds)
+        testTable.delegate = self;
+        testTable.dataSource = self;
+        testTable.tableFooterView = UIView()
+        self.view.addSubview(testTable)
+        
+        testTable.addRefreshHeaderWithCallBack({
+            let delayInSeconds = 1.0
+            for index in 1...4 {
+                self.dataSource?.addObject("\(index)")
+            }
+            let popTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(delayInSeconds * Double(NSEC_PER_SEC))) // 1
+            dispatch_after(popTime, dispatch_get_main_queue()) {
+                testTable .reloadData()
+                testTable.headerEndRefreshing()
+            }
+        })
     }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+extension ViewController : UITableViewDataSource {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("testTableViewCell") as? UITableViewCell
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "testTableViewCell")
+        }
+        
+        cell!.textLabel!.text = self.dataSource?.objectAtIndex(indexPath.row) as? String
+        
+        if indexPath.row == 9 {
+            var line = UIView(frame: CGRectMake(0, 43, 320, 1))
+            line.backgroundColor = UIColor.blackColor()
+            cell!.contentView.addSubview(line)
+        }
+        
+        return cell!
     }
+}
 
+extension ViewController : UITableViewDelegate {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSource!.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 
 }
 

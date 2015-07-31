@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		7F1DED421B68BFF700993C45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DED411B68BFF700993C45 /* AppDelegate.swift */; };
 		7F1DED441B68BFF700993C45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DED431B68BFF700993C45 /* ViewController.swift */; };
-		7F1DED471B68BFF700993C45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1DED451B68BFF700993C45 /* Main.storyboard */; };
 		7F1DED491B68BFF700993C45 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1DED481B68BFF700993C45 /* Images.xcassets */; };
-		7F1DED4C1B68BFF700993C45 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F1DED4A1B68BFF700993C45 /* LaunchScreen.xib */; };
 		7F1DED581B68BFF700993C45 /* HQRefreshDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DED571B68BFF700993C45 /* HQRefreshDemoTests.swift */; };
+		7F8DCCFB1B69B5CA00F937DC /* UIScrollView+Refresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8DCCFA1B69B5CA00F937DC /* UIScrollView+Refresh.swift */; };
+		7F8DCCFD1B69B6A300F937DC /* HQRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,12 +30,12 @@
 		7F1DED401B68BFF700993C45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F1DED411B68BFF700993C45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F1DED431B68BFF700993C45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7F1DED461B68BFF700993C45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F1DED481B68BFF700993C45 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7F1DED4B1B68BFF700993C45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7F1DED511B68BFF700993C45 /* HQRefreshDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HQRefreshDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F1DED561B68BFF700993C45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F1DED571B68BFF700993C45 /* HQRefreshDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HQRefreshDemoTests.swift; sourceTree = "<group>"; };
+		7F8DCCFA1B69B5CA00F937DC /* UIScrollView+Refresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Refresh.swift"; sourceTree = "<group>"; };
+		7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQRefreshView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +77,10 @@
 		7F1DED3E1B68BFF700993C45 /* HQRefreshDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7F1DED611B68C01600993C45 /* HQRefresh */,
 				7F1DED411B68BFF700993C45 /* AppDelegate.swift */,
 				7F1DED431B68BFF700993C45 /* ViewController.swift */,
-				7F1DED451B68BFF700993C45 /* Main.storyboard */,
 				7F1DED481B68BFF700993C45 /* Images.xcassets */,
-				7F1DED4A1B68BFF700993C45 /* LaunchScreen.xib */,
 				7F1DED3F1B68BFF700993C45 /* Supporting Files */,
 			);
 			path = HQRefreshDemo;
@@ -110,6 +109,15 @@
 				7F1DED561B68BFF700993C45 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7F1DED611B68C01600993C45 /* HQRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				7F8DCCFA1B69B5CA00F937DC /* UIScrollView+Refresh.swift */,
+				7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */,
+			);
+			path = HQRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,8 +200,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F1DED471B68BFF700993C45 /* Main.storyboard in Resources */,
-				7F1DED4C1B68BFF700993C45 /* LaunchScreen.xib in Resources */,
 				7F1DED491B68BFF700993C45 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +219,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F1DED441B68BFF700993C45 /* ViewController.swift in Sources */,
+				7F8DCCFD1B69B6A300F937DC /* HQRefreshView.swift in Sources */,
+				7F8DCCFB1B69B5CA00F937DC /* UIScrollView+Refresh.swift in Sources */,
 				7F1DED421B68BFF700993C45 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,25 +242,6 @@
 			targetProxy = 7F1DED521B68BFF700993C45 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		7F1DED451B68BFF700993C45 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F1DED461B68BFF700993C45 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		7F1DED4A1B68BFF700993C45 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F1DED4B1B68BFF700993C45 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7F1DED591B68BFF700993C45 /* Debug */ = {
@@ -342,6 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = HQRefreshDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = HQRefreshDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -411,6 +402,7 @@
 				7F1DED5D1B68BFF700993C45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F1DED5E1B68BFF700993C45 /* Build configuration list for PBXNativeTarget "HQRefreshDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +411,7 @@
 				7F1DED601B68BFF700993C45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
