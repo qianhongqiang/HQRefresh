@@ -9,7 +9,7 @@
 import UIKit
 //constant
 let screenWidth : CGFloat = UIScreen.mainScreen().bounds.width
-let refreshHeaderViewHeight : CGFloat = 64
+let refreshViewHeight : CGFloat = 64
 
 let RefreshContentOffSet = "contentOffset"
 
@@ -20,19 +20,20 @@ enum RefreshState {
     case  WillRefreshing
 }
 
+enum RefreshViewType {
+    case Header
+    case Footer
+}
+
 class HQRefreshView: UIView {
     
-    var refreshCallBack : (()->Void)?
+    var refreshCallBack : (()->Void)?   //刷新完成的回调
     
     var parentScrollView : UIScrollView?
     var originContentInset : UIEdgeInsets?
     var detailLabel : UILabel!
     
-    class func header()->HQRefreshView {
-        var refreshView = HQRefreshView(frame: CGRectMake(0, -refreshHeaderViewHeight, screenWidth, refreshHeaderViewHeight))
-        refreshView.backgroundColor = UIColor.yellowColor()
-        return refreshView
-    }
+    var viewType : RefreshViewType?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,33 +51,16 @@ class HQRefreshView: UIView {
         newSuperview!.addObserver(self, forKeyPath: RefreshContentOffSet as String, options: NSKeyValueObservingOptions.New, context: nil)
         parentScrollView = newSuperview as? UIScrollView
         originContentInset = parentScrollView?.contentInset
-        
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if RefreshContentOffSet.isEqual(keyPath) {
-            adjustStateWithContentOffset()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if self.viewType == RefreshViewType.Footer {
+            let height = superview?.frame.height
+            self.frame = CGRectMake(0, height!, screenWidth, refreshViewHeight)
         }
     }
-    
-    func adjustStateWithContentOffset() {
-        var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
-        var happenOffsetY:CGFloat = -self.originContentInset!.top
-        if (currentOffsetY >= happenOffsetY) {
-            return
-        }
-        if self.parentScrollView!.dragging {
-            if currentOffsetY < -refreshHeaderViewHeight {
-                currentViewState = RefreshState.WillRefreshing
-            }else {
-                currentViewState = RefreshState.Normal
-            }
-        }else {
-            if currentViewState != RefreshState.Refreshing && currentOffsetY < -refreshHeaderViewHeight {
-                currentViewState = RefreshState.Refreshing
-            }
-        }
-    }
+
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -107,8 +91,8 @@ class HQRefreshView: UIView {
             case .Refreshing:
                 self.parentScrollView?.userInteractionEnabled = false
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetTop = refreshHeaderViewHeight
-                    self.parentScrollView?.HQ_offsetY = -refreshHeaderViewHeight
+                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight
+                    self.parentScrollView?.HQ_offsetY = -refreshViewHeight
                 })
                 self.refreshCallBack!()
                 break
@@ -123,7 +107,15 @@ class HQRefreshView: UIView {
 }
 
 extension HQRefreshView {
-    func endRefreshing() {
-        currentViewState = RefreshState.Normal
+    
+    func updateTimeLabel(updateTime:NSDate) -> String {
+        var calendar:NSCalendar = NSCalendar.currentCalendar()
+        var unitFlags:NSCalendarUnit = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay |  NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute
+        var formatter:NSDateFormatter = NSDateFormatter()
+        
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        var time:String = formatter.stringFromDate(updateTime)
+        return time
+        
     }
 }

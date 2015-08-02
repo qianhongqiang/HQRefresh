@@ -28,7 +28,8 @@ class ViewController: UIViewController,UITableViewDelegate {
         testTable.tableFooterView = UIView()
         self.view.addSubview(testTable)
         
-        testTable.addRefreshHeaderWithCallBack({
+        
+        testTable.addRefreshHeaderWithCallBack { () -> Void in
             let delayInSeconds = 1.0
             for index in 1...4 {
                 self.dataSource?.addObject("\(index)")
@@ -39,7 +40,22 @@ class ViewController: UIViewController,UITableViewDelegate {
                 testTable .reloadData()
                 testTable.headerEndRefreshing()
             }
-        })
+
+        }
+        
+        testTable.addRefreshFooterWithCallBack { () -> Void in
+            let delayInSeconds = 1.0
+            for index in 1...4 {
+                self.dataSource?.addObject("\(index)")
+            }
+            let popTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(delayInSeconds * Double(NSEC_PER_SEC))) // 1
+            dispatch_after(popTime, dispatch_get_main_queue()) {
+                testTable .reloadData()
+                testTable.headerEndRefreshing()
+            }
+
+        }
     }
 }
 

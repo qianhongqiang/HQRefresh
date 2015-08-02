@@ -11,7 +11,13 @@ import UIKit
 
 extension UIScrollView {
     func addRefreshHeaderWithCallBack(callBack:(()->Void)!){
-        var refreshView : HQRefreshView = HQRefreshView.header()
+        var refreshView : HQRefreshHaederView = HQRefreshHaederView.header()
+        refreshView.refreshCallBack = callBack
+        self.addSubview(refreshView)
+    }
+    
+    func addRefreshFooterWithCallBack(callBack:(()->Void)!){
+        var refreshView : HQRefreshFooterView = HQRefreshFooterView.footer()
         refreshView.refreshCallBack = callBack
         self.addSubview(refreshView)
     }
@@ -101,8 +107,20 @@ extension UIScrollView {
     func headerEndRefreshing()
     {
         for object : AnyObject in self.subviews{
-            if object is HQRefreshView {
-                object.endRefreshing()
+            if object is HQRefreshHaederView {
+                let cmp : HQRefreshHaederView = object as! HQRefreshHaederView
+                cmp.endHeaderRefreshing()
+            }
+        }
+        
+    }
+    
+    func footerEndRefreshing()
+    {
+        for object : AnyObject in self.subviews{
+            if object is HQRefreshHaederView {
+                let cmp : HQRefreshHaederView = object as! HQRefreshHaederView
+                cmp.endHeaderRefreshing()
             }
         }
         
