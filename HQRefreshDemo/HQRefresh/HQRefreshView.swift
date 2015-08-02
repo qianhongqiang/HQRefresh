@@ -20,11 +20,6 @@ enum RefreshState {
     case  WillRefreshing
 }
 
-enum RefreshViewType {
-    case Header
-    case Footer
-}
-
 class HQRefreshView: UIView {
     
     var refreshCallBack : (()->Void)?   //刷新完成的回调
@@ -32,8 +27,6 @@ class HQRefreshView: UIView {
     var parentScrollView : UIScrollView?
     var originContentInset : UIEdgeInsets?
     var detailLabel : UILabel!
-    
-    var viewType : RefreshViewType?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,16 +44,17 @@ class HQRefreshView: UIView {
         newSuperview!.addObserver(self, forKeyPath: RefreshContentOffSet as String, options: NSKeyValueObservingOptions.New, context: nil)
         parentScrollView = newSuperview as? UIScrollView
         originContentInset = parentScrollView?.contentInset
+        
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if self.viewType == RefreshViewType.Footer {
-            let height = superview?.frame.height
-            self.frame = CGRectMake(0, height!, screenWidth, refreshViewHeight)
-        }
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        reframe()
     }
-
+    
+    func reframe() {
+        
+    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -70,37 +64,8 @@ class HQRefreshView: UIView {
     
     var currentViewState : RefreshState? {
         willSet {
-            if currentViewState == newValue {
-                return
-            }
-            previousViewState = currentViewState
-            self.currentViewState = newValue
         }
         didSet {
-            switch currentViewState! {
-            case .Normal:
-                self.parentScrollView?.userInteractionEnabled = true
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetTop = 0
-                }, completion: { (completed) -> Void in
-                    self.parentScrollView?.HQ_offsetY = -0
-                })
-                break
-            case .Pulling:
-                break
-            case .Refreshing:
-                self.parentScrollView?.userInteractionEnabled = false
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight
-                    self.parentScrollView?.HQ_offsetY = -refreshViewHeight
-                })
-                self.refreshCallBack!()
-                break
-            case .WillRefreshing:
-                break
-            default:
-                break
-            }
         }
     }
     

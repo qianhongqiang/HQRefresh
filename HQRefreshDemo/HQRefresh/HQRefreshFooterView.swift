@@ -34,13 +34,52 @@ class HQRefreshFooterView: HQRefreshView {
             }
         }
     }
+    
+    override func reframe() {
+        let superviewHeight = superview?.frame.height
+        self.frame = CGRectMake(0, superviewHeight!, screenWidth, refreshViewHeight)
+    }
+    
+    override var currentViewState : RefreshState? {
+        willSet {
+            if currentViewState == newValue {
+                return
+            }
+            previousViewState = currentViewState
+        }
+        didSet {
+            switch currentViewState! {
+            case .Normal:
+                self.parentScrollView?.userInteractionEnabled = true
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    self.parentScrollView?.HQ_edgeInsetTop = 0
+                    }, completion: { (completed) -> Void in
+                        self.parentScrollView?.HQ_offsetY = -0
+                })
+                break
+            case .Pulling:
+                break
+            case .Refreshing:
+                self.parentScrollView?.userInteractionEnabled = false
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight
+                    self.parentScrollView?.HQ_offsetY = -refreshViewHeight
+                })
+                self.refreshCallBack!()
+                break
+            case .WillRefreshing:
+                break
+            default:
+                break
+            }
+        }
+    }
 
 }
 
 extension HQRefreshFooterView {
     class func footer()->HQRefreshFooterView {
-        var refreshView = HQRefreshFooterView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
-        refreshView.viewType = RefreshViewType.Header
+        var refreshView = HQRefreshFooterView(frame: CGRectMake(0, 0, screenWidth, refreshViewHeight))
         return refreshView
     }
     

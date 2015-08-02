@@ -34,13 +34,47 @@ class HQRefreshHaederView: HQRefreshView {
             }
         }
     }
+    
+    override var currentViewState : RefreshState? {
+        willSet {
+            if currentViewState == newValue {
+                return
+            }
+            previousViewState = currentViewState
+        }
+        didSet {
+            switch currentViewState! {
+            case .Normal:
+                self.parentScrollView?.userInteractionEnabled = true
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    self.parentScrollView?.HQ_edgeInsetTop = 0
+                    }, completion: { (completed) -> Void in
+                        self.parentScrollView?.HQ_offsetY = -0
+                })
+                break
+            case .Pulling:
+                break
+            case .Refreshing:
+                self.parentScrollView?.userInteractionEnabled = false
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight
+                    self.parentScrollView?.HQ_offsetY = -refreshViewHeight
+                })
+                self.refreshCallBack!()
+                break
+            case .WillRefreshing:
+                break
+            default:
+                break
+            }
+        }
+    }
 
 }
 
 extension HQRefreshHaederView {
     class func header()->HQRefreshHaederView {
         var refreshView = HQRefreshHaederView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
-        refreshView.viewType = RefreshViewType.Header
         return refreshView
     }
     
