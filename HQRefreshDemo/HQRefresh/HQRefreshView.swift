@@ -37,6 +37,7 @@ class HQRefreshView: UIView {
         self.addSubview(self.detailLabel)
         
         self.currentViewState = RefreshState.Normal
+        self.previousViewState = RefreshState.Normal
     }
     
     override func willMoveToSuperview(newSuperview: UIView?) {

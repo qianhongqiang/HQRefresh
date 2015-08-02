@@ -52,7 +52,7 @@ class ViewController: UIViewController,UITableViewDelegate {
                 Int64(delayInSeconds * Double(NSEC_PER_SEC))) // 1
             dispatch_after(popTime, dispatch_get_main_queue()) {
                 testTable .reloadData()
-                testTable.headerEndRefreshing()
+                testTable.footerEndRefreshing()
             }
 
         }

@@ -118,9 +118,9 @@ extension UIScrollView {
     func footerEndRefreshing()
     {
         for object : AnyObject in self.subviews{
-            if object is HQRefreshHaederView {
-                let cmp : HQRefreshHaederView = object as! HQRefreshHaederView
-                cmp.endHeaderRefreshing()
+            if object is HQRefreshFooterView {
+                let cmp : HQRefreshFooterView = object as! HQRefreshFooterView
+                cmp.endFooterRefreshing()
             }
         }
         
