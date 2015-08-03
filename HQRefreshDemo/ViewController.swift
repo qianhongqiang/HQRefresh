@@ -26,7 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate {
         testTable.delegate = self;
         testTable.dataSource = self;
         testTable.tableFooterView = UIView()
-//        testTable.contentInset = UIEdgeInsetsMake(100, 0, 0, 0)
+//        testTable.contentInset = UIEdgeInsetsMake(0, 0, 100, 0)
         self.view.addSubview(testTable)
         
         

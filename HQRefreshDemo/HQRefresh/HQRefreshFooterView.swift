@@ -18,6 +18,9 @@ class HQRefreshFooterView: HQRefreshView {
             adjustStateWithContentOffset()
             let cmp : UITableView = superview as! UITableView
             originContentInset = cmp.contentInset
+            if self.parentScrollView!.contentSize.height > self.parentScrollView!.frame.height {
+                self.frame.origin.y = self.parentScrollView!.contentSize.height
+            }
         }
     }
     
@@ -65,8 +68,6 @@ class HQRefreshFooterView: HQRefreshView {
                 var deltaH:CGFloat = self.heightForContentBreakView()
                 var currentCount:Int = self.totalDataCountInScrollView()
                 if (RefreshState.Refreshing == previousViewState && deltaH > 0  && currentCount != self.lastRefreshCount) {
-
-//                    self.parentScrollView?.contentOffset = self.parentScrollView!.contentOffset
                 }
                 
                 break
@@ -76,8 +77,6 @@ class HQRefreshFooterView: HQRefreshView {
                 self.parentScrollView?.userInteractionEnabled = false
                 
                 self.lastRefreshCount = self.totalDataCountInScrollView();
-                
-                
                 
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     var bottom:CGFloat = self.frame.size.height + self.originContentInset!.bottom
