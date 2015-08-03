@@ -57,6 +57,9 @@ class ViewController: UIViewController,UITableViewDelegate {
             }
 
         }
+        
+        var testControl : HQRefreshControl = HQRefreshControl(frame: CGRectMake(0, 0, 100, 100))
+        self.view.addSubview(testControl)
     }
 }
 

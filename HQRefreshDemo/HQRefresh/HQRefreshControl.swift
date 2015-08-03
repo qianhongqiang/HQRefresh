@@ -18,6 +18,14 @@ class HQRefreshControl: UIView {
     
     override func drawRect(rect: CGRect) {
         
+        var bezierPath = self.addBezierPath(CGPointMake(20, 20), toPoint: CGPointMake(20, 60), fromRadius: 20, toRadius: 10, scale: 1)
+        
+        var context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, UIColor.yellowColor().CGColor);
+        CGContextSetLineWidth(context, 1);
+        CGContextSetStrokeColorWithColor(context, UIColor.yellowColor().CGColor);
+        CGContextAddPath(context, bezierPath.CGPath);
+        CGContextDrawPath(context, kCGPathFillStroke);
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,60 +37,81 @@ class HQRefreshControl: UIView {
 extension HQRefreshControl {
     func addBezierPath(fromPoint:CGPoint, toPoint:CGPoint, fromRadius:CGFloat, toRadius:CGFloat, scale:CGFloat) ->UIBezierPath {
         var path = UIBezierPath();
-//        let r = distanceBetweenPoints(fromPoint, pointB: toPoint)
-//        let offsetY = fabs(fromRadius-toRadius)
-//        if (r <= offsetY) {
-//            var centerPos : CGPoint
-//            var radiusL :CGFloat
-//            if (fromRadius >= toRadius) {
-//                centerPos = fromPoint;
-//                radiusL = fromRadius;
-//            } else {
-//                centerPos = toPoint;
-//                radiusL = toRadius;
-//            }
-//            path.addArcWithCenter(centerPos, radius:radiusL, startAngle: 0 as CGFloat, endAngle: 2*M_PI, clockwise: true)
-//        } else {
-//            CGFloat originX = toPoint.x - fromPoint.x;
-//            CGFloat originY = toPoint.y - fromPoint.y;
-//            
-//            CGFloat fromOriginAngel = (originX >= 0)?atan(originY/originX):(atan(originY/originX)+M_PI);
-//            CGFloat fromOffsetAngel = (fromRadius >= toRadius)?acos(offsetY/r):(M_PI-acos(offsetY/r));
-//            CGFloat fromStartAngel = fromOriginAngel + fromOffsetAngel;
-//            CGFloat fromEndAngel = fromOriginAngel - fromOffsetAngel;
-//            
-//            CGPoint fromStartPoint = CGPointMake(fromPoint.x+cos(fromStartAngel)*fromRadius, fromPoint.y+sin(fromStartAngel)*fromRadius);
-//            
-//            CGFloat toOriginAngel = (originX < 0)?atan(originY/originX):(atan(originY/originX)+M_PI);
-//            CGFloat toOffsetAngel = (fromRadius < toRadius)?acos(offsetY/r):(M_PI-acos(offsetY/r));
-//            CGFloat toStartAngel = toOriginAngel + toOffsetAngel;
-//            CGFloat toEndAngel = toOriginAngel - toOffsetAngel;
-//            CGPoint toStartPoint = CGPointMake(toPoint.x+cos(toStartAngel)*toRadius, toPoint.y+sin(toStartAngel)*toRadius);
-//            
-//            CGPoint middlePoint = CGPointMake(fromPoint.x+(toPoint.x-fromPoint.x)/2, fromPoint.y+(toPoint.y-fromPoint.y)/2);
-//            CGFloat middleRadius = (fromRadius+toRadius)/2;
-//            
-//            CGPoint fromControlPoint = CGPointMake(middlePoint.x+sin(fromOriginAngel)*middleRadius*scale, middlePoint.y-cos(fromOriginAngel)*middleRadius*scale);
-//            
-//            CGPoint toControlPoint = CGPointMake(middlePoint.x+sin(toOriginAngel)*middleRadius*scale, middlePoint.y-cos(toOriginAngel)*middleRadius*scale);
-//            
-//            [path moveToPoint:fromStartPoint];
-//            
-//            [path addArcWithCenter:fromPoint radius:fromRadius startAngle:fromStartAngel endAngle:fromEndAngel clockwise:YES];
-//            
-//            if (r > (fromRadius+toRadius)) {
-//                [path addQuadCurveToPoint:toStartPoint controlPoint:fromControlPoint];
-//            }
-//            
-//            [path addArcWithCenter:toPoint radius:toRadius startAngle:toStartAngel endAngle:toEndAngel clockwise:YES];
-//            
-//            if (r > (fromRadius+toRadius)) {
-//                [path addQuadCurveToPoint:fromStartPoint controlPoint:toControlPoint];
-//            }
-//        }
-//        
-//        [path closePath];
+        var r : CGFloat = distanceBetweenPoints(fromPoint, pointB: toPoint)
+        var offsetY = fabs(fromRadius-toRadius)
+        if (r <= offsetY) {
+            var centerPos : CGPoint
+            var radius : CGFloat
+            if (fromRadius >= toRadius) {
+                centerPos = fromPoint;
+                radius = fromRadius;
+            } else {
+                centerPos = toPoint;
+                radius = toRadius;
+            }
+            path.addArcWithCenter(centerPos, radius: radius, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
+        }else {
+            var originX : CGFloat = toPoint.x - fromPoint.x;
+            var originY : CGFloat = toPoint.y - fromPoint.y;
+            
+            var fromOriginAngel : CGFloat
+            if originX >= 0 {
+                fromOriginAngel = atan(originY/originX)
+            }else {
+                fromOriginAngel = atan(originY/originX)+CGFloat(M_PI)
+            }
+            
+            var fromOffsetAngel : CGFloat
+            if fromRadius >= toRadius {
+                fromOffsetAngel = acos(offsetY/r)
+            }else {
+                fromOffsetAngel = CGFloat(M_PI)-acos(offsetY/r)
+            }
+            
+            var fromStartAngel = fromOriginAngel + fromOffsetAngel;
+            var fromEndAngel = fromOriginAngel - fromOffsetAngel;
+            
+            var fromStartPoint = CGPointMake(fromPoint.x+cos(fromStartAngel)*fromRadius, fromPoint.y+sin(fromStartAngel)*fromRadius);
+            
+            var toOriginAngel : CGFloat
+            if originX < 0 {
+                toOriginAngel = atan(originY/originX)
+            }else {
+                toOriginAngel = atan(originY/originX)+CGFloat(M_PI)
+            }
+            var toOffsetAngel : CGFloat
+            if fromRadius < toRadius {
+                toOffsetAngel = acos(offsetY/r)
+            }else {
+                toOffsetAngel = CGFloat(M_PI)-acos(offsetY/r)
+            }
+            
+            var toStartAngel = toOriginAngel + toOffsetAngel;
+            var toEndAngel = toOriginAngel - toOffsetAngel;
+            var toStartPoint = CGPointMake(toPoint.x+cos(toStartAngel)*toRadius, toPoint.y+sin(toStartAngel)*toRadius);
+            
+            var middlePoint = CGPointMake(fromPoint.x+(toPoint.x-fromPoint.x)/2, fromPoint.y+(toPoint.y-fromPoint.y)/2);
+            var middleRadius = (fromRadius+toRadius)/2;
+            
+            var fromControlPoint = CGPointMake(middlePoint.x+sin(fromOriginAngel)*middleRadius*scale, middlePoint.y-cos(fromOriginAngel)*middleRadius*scale);
+            
+            var toControlPoint = CGPointMake(middlePoint.x+sin(toOriginAngel)*middleRadius*scale, middlePoint.y-cos(toOriginAngel)*middleRadius*scale);
+            
+            path.moveToPoint(fromStartPoint)
+            path.addArcWithCenter(fromPoint, radius: fromRadius, startAngle: fromStartAngel, endAngle: fromEndAngel, clockwise: true)
+            
+            if (r > (fromRadius+toRadius)) {
+                path.addQuadCurveToPoint(toStartPoint, controlPoint: fromControlPoint)
+            }
+            
+            path.addArcWithCenter(toPoint, radius: toRadius, startAngle: toStartAngel, endAngle: toEndAngel, clockwise: true)
+            
+            if (r > (fromRadius+toRadius)) {
+                path.addQuadCurveToPoint(fromStartPoint, controlPoint: toControlPoint)
+            }
+        }
         
+        path.closePath()
         return path;
     }
     
