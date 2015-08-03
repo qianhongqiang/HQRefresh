@@ -20,7 +20,7 @@ class HQRefreshHaederView: HQRefreshView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        refreshControl = HQRefreshControl(frame: CGRectMake((screenWidth - 18)/2, 0, 18, 64))
+        refreshControl = HQRefreshControl(frame: CGRectMake((screenWidth - 18)/2, 0, 24, 64))
         self.addSubview(refreshControl!)
     }
 

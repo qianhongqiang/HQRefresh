@@ -8,6 +8,8 @@
 
 import UIKit
 
+let refreshControlOriginRadius : CGFloat = 12
+
 class HQRefreshControl: UIView {
 
     var percentage : CGFloat!{
@@ -30,26 +32,26 @@ class HQRefreshControl: UIView {
         
         var startP : CGPoint = CGPointZero,startR : CGFloat = 0,endP : CGPoint = CGPointZero, endR : CGFloat = 0 ,distance :CGFloat = 0
         
-        if absoluteValue < 18 {
-            startP = CGPointMake(9, 55)
-            endP = CGPointMake(9, 55)
-            startR = 9
-            endR = 9
+        if absoluteValue < 2*refreshControlOriginRadius {
+            startP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
+            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
+            startR = refreshControlOriginRadius
+            endR = refreshControlOriginRadius
         }else if absoluteValue < 64 {
-            startP = CGPointMake(9, 73-absoluteValue)
-            endP = CGPointMake(9, 55)
+            startP = CGPointMake(refreshControlOriginRadius, 64 + refreshControlOriginRadius - absoluteValue)
+            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
             distance = distanceBetweenPoints(startP, pointB: endP)
-            startR = 9 - 0.05 * distance
-            endR = 9 - 0.12 * distance
+            startR = refreshControlOriginRadius - 0.05 * distance
+            endR = refreshControlOriginRadius - 0.2 * distance
         }else {
-            startP = CGPointMake(9, 9)
-            endP = CGPointMake(9, 55)
+            startP = CGPointMake(refreshControlOriginRadius, refreshControlOriginRadius)
+            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
             distance = distanceBetweenPoints(startP, pointB: endP)
-            startR = 9 - 0.05 * distance
-            endR = 9 - 0.12 * distance
+            startR = refreshControlOriginRadius - 0.05 * distance
+            endR = refreshControlOriginRadius - 0.2 * distance
         }
         
-        var bezierPath = self.addBezierPath(startP, toPoint: endP, fromRadius: CGFloat(startR), toRadius: CGFloat(endR), scale: 0.7)
+        var bezierPath = self.addBezierPath(startP, toPoint: endP, fromRadius: CGFloat(startR), toRadius: CGFloat(endR), scale: 0.6)
         
         var context = UIGraphicsGetCurrentContext()
         CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor);
