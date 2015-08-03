@@ -35,8 +35,14 @@ class HQRefreshControl: UIView {
             endP = CGPointMake(9, 55)
             startR = 9
             endR = 9
-        }else {
+        }else if absoluteValue < 64 {
             startP = CGPointMake(9, 73-absoluteValue)
+            endP = CGPointMake(9, 55)
+            distance = distanceBetweenPoints(startP, pointB: endP)
+            startR = 9 - 0.05 * distance
+            endR = 9 - 0.12 * distance
+        }else {
+            startP = CGPointMake(9, 9)
             endP = CGPointMake(9, 55)
             distance = distanceBetweenPoints(startP, pointB: endP)
             startR = 9 - 0.05 * distance
