@@ -13,6 +13,7 @@
 		7F1DED581B68BFF700993C45 /* HQRefreshDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DED571B68BFF700993C45 /* HQRefreshDemoTests.swift */; };
 		7F2774C51B6E248100710E79 /* HQRefreshHaederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2774C41B6E248100710E79 /* HQRefreshHaederView.swift */; };
 		7F2774C71B6E261000710E79 /* HQRefreshFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2774C61B6E261000710E79 /* HQRefreshFooterView.swift */; };
+		7F3781101B6F35F200D17786 /* UIView+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37810F1B6F35F200D17786 /* UIView+Custom.swift */; };
 		7F8DCCFB1B69B5CA00F937DC /* UIScrollView+Refresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8DCCFA1B69B5CA00F937DC /* UIScrollView+Refresh.swift */; };
 		7F8DCCFD1B69B6A300F937DC /* HQRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		7F1DED571B68BFF700993C45 /* HQRefreshDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HQRefreshDemoTests.swift; sourceTree = "<group>"; };
 		7F2774C41B6E248100710E79 /* HQRefreshHaederView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQRefreshHaederView.swift; sourceTree = "<group>"; };
 		7F2774C61B6E261000710E79 /* HQRefreshFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQRefreshFooterView.swift; sourceTree = "<group>"; };
+		7F37810F1B6F35F200D17786 /* UIView+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Custom.swift"; sourceTree = "<group>"; };
 		7F8DCCFA1B69B5CA00F937DC /* UIScrollView+Refresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Refresh.swift"; sourceTree = "<group>"; };
 		7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HQRefreshView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				7F8DCCFC1B69B6A300F937DC /* HQRefreshView.swift */,
 				7F2774C41B6E248100710E79 /* HQRefreshHaederView.swift */,
 				7F2774C61B6E261000710E79 /* HQRefreshFooterView.swift */,
+				7F37810F1B6F35F200D17786 /* UIView+Custom.swift */,
 			);
 			path = HQRefresh;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3781101B6F35F200D17786 /* UIView+Custom.swift in Sources */,
 				7F1DED441B68BFF700993C45 /* ViewController.swift in Sources */,
 				7F8DCCFD1B69B6A300F937DC /* HQRefreshView.swift in Sources */,
 				7F2774C71B6E261000710E79 /* HQRefreshFooterView.swift in Sources */,

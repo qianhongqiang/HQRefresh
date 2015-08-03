@@ -13,12 +13,13 @@ let refreshViewHeight : CGFloat = 64
 
 let RefreshContentOffSet = "contentOffset"
 
+let defaultRefreshHit = "下拉刷新"
+
 enum RefreshState {
     case  Pulling               // 松开就可以进行刷新的状态
     case  Normal                // 普通状态
     case  Refreshing            // 正在刷新中的状态
     case  WillRefreshing
-    case  NoMoreData
 }
 
 class HQRefreshView: UIView {
@@ -33,7 +34,7 @@ class HQRefreshView: UIView {
         super.init(frame: frame)
         
         detailLabel = UILabel(frame: CGRectMake(0, 10, screenWidth, 20))
-        detailLabel.text = "refresh"
+        detailLabel.text = defaultRefreshHit
         detailLabel.textAlignment = NSTextAlignment.Center
         self.addSubview(self.detailLabel)
         
