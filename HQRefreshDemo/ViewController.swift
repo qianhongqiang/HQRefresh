@@ -26,7 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate {
         testTable.delegate = self;
         testTable.dataSource = self;
         testTable.tableFooterView = UIView()
-//        testTable.contentInset = UIEdgeInsetsMake(0, 0, 100, 0)
+//        testTable.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
         self.view.addSubview(testTable)
         
         
@@ -57,9 +57,10 @@ class ViewController: UIViewController,UITableViewDelegate {
             }
 
         }
-        
-        var testControl : HQRefreshControl = HQRefreshControl(frame: CGRectMake(0, 0, 100, 100))
-        self.view.addSubview(testControl)
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
 

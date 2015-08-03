@@ -16,8 +16,23 @@ class HQRefreshHaederView: HQRefreshView {
         }
     }
     
+    var refreshControl : HQRefreshControl?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        refreshControl = HQRefreshControl(frame: CGRectMake((screenWidth - 18)/2, 0, 18, 64))
+        self.addSubview(refreshControl!)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func adjustStateWithContentOffset() {
         var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
+        
+        self.refreshControl!.percentage = CGFloat(-currentOffsetY/64)
+        
         var happenOffsetY:CGFloat = -self.originContentInset!.top
         if (currentOffsetY >= happenOffsetY) {
             return

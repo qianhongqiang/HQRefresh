@@ -10,20 +10,45 @@ import UIKit
 
 class HQRefreshControl: UIView {
 
-    var percentage : CGFloat = 0.0
+    var percentage : CGFloat!{
+        willSet {
+            
+        }
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = UIColor.clearColor()
+        percentage = 0;
     }
     
     override func drawRect(rect: CGRect) {
+        var absoluteValue = percentage * 64
         
-        var bezierPath = self.addBezierPath(CGPointMake(20, 20), toPoint: CGPointMake(20, 60), fromRadius: 20, toRadius: 10, scale: 1)
+        var startP : CGPoint = CGPointZero,startR : CGFloat = 0,endP : CGPoint = CGPointZero, endR : CGFloat = 0 ,distance :CGFloat = 0
+        
+        if absoluteValue < 18 {
+            startP = CGPointMake(9, 55)
+            endP = CGPointMake(9, 55)
+            startR = 9
+            endR = 9
+        }else {
+            startP = CGPointMake(9, 73-absoluteValue)
+            endP = CGPointMake(9, 55)
+            distance = distanceBetweenPoints(startP, pointB: endP)
+            startR = 9 - 0.05 * distance
+            endR = 9 - 0.12 * distance
+        }
+        
+        var bezierPath = self.addBezierPath(startP, toPoint: endP, fromRadius: CGFloat(startR), toRadius: CGFloat(endR), scale: 0.7)
         
         var context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.yellowColor().CGColor);
+        CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor);
         CGContextSetLineWidth(context, 1);
-        CGContextSetStrokeColorWithColor(context, UIColor.yellowColor().CGColor);
+        CGContextSetStrokeColorWithColor(context, UIColor.lightGrayColor().CGColor);
         CGContextAddPath(context, bezierPath.CGPath);
         CGContextDrawPath(context, kCGPathFillStroke);
     }
