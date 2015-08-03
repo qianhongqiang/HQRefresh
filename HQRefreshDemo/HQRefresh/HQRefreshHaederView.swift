@@ -45,11 +45,15 @@ class HQRefreshHaederView: HQRefreshView {
         didSet {
             switch currentViewState! {
             case .Normal:
+                
+                if previousViewState != RefreshState.Refreshing {
+                    return
+                }
+                
                 self.parentScrollView?.userInteractionEnabled = true
                 UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetTop = 0
+                    self.parentScrollView?.HQ_edgeInsetTop = self.originContentInset!.top
                     }, completion: { (completed) -> Void in
-                        self.parentScrollView?.HQ_offsetY = -0
                 })
                 break
             case .Pulling:
@@ -57,10 +61,11 @@ class HQRefreshHaederView: HQRefreshView {
             case .Refreshing:
                 self.parentScrollView?.userInteractionEnabled = false
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight
+                    self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight + self.originContentInset!.top
                     self.parentScrollView?.HQ_offsetY = -refreshViewHeight
+                }, completion: { (completed) -> Void in
+                    self.refreshCallBack!()
                 })
-                self.refreshCallBack!()
                 break
             case .WillRefreshing:
                 break
@@ -81,5 +86,6 @@ extension HQRefreshHaederView {
     func endHeaderRefreshing() {
         detailLabel.text = updateTimeLabel(NSDate())
         currentViewState = RefreshState.Normal
+        previousViewState = RefreshState.Normal
     }
 }

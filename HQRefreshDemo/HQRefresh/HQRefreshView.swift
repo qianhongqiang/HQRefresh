@@ -18,6 +18,7 @@ enum RefreshState {
     case  Normal                // 普通状态
     case  Refreshing            // 正在刷新中的状态
     case  WillRefreshing
+    case  NoMoreData
 }
 
 class HQRefreshView: UIView {

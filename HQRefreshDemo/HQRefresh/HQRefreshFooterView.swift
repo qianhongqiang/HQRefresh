@@ -11,16 +11,19 @@ import UIKit
 class HQRefreshFooterView: HQRefreshView {
     
     var lastRefreshCount:Int = 0
-
+    var lastBottomDelta : CGFloat = 0
+    
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         if RefreshContentOffSet.isEqual(keyPath) {
             adjustStateWithContentOffset()
+            let cmp : UITableView = superview as! UITableView
+            originContentInset = cmp.contentInset
         }
     }
     
     func adjustStateWithContentOffset() {
         var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
-        var happenOffsetY:CGFloat = -self.originContentInset!.bottom
+        var happenOffsetY:CGFloat = self.happenOffsetY()
         if (currentOffsetY <= happenOffsetY) {
             return
         }
@@ -52,23 +55,18 @@ class HQRefreshFooterView: HQRefreshView {
         didSet {
             switch currentViewState! {
             case .Normal:
-                if self.previousViewState == currentViewState {
-                    return
-                }
-                
                 self.parentScrollView?.userInteractionEnabled = true
+                if previousViewState == RefreshState.Refreshing {
                 UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.parentScrollView?.HQ_edgeInsetBottom = 0
-                    }, completion: { (completed) -> Void in
-                        self.parentScrollView?.HQ_offsetY = -0
-                })
+                    self.parentScrollView?.HQ_edgeInsetBottom -= self.lastBottomDelta
+                    })
+                }
                 
                 var deltaH:CGFloat = self.heightForContentBreakView()
                 var currentCount:Int = self.totalDataCountInScrollView()
                 if (RefreshState.Refreshing == previousViewState && deltaH > 0  && currentCount != self.lastRefreshCount) {
-                    var offset:CGPoint = self.parentScrollView!.contentOffset;
-                    offset.y = self.parentScrollView!.contentOffset.y
-                    self.parentScrollView?.contentOffset = offset;
+
+//                    self.parentScrollView?.contentOffset = self.parentScrollView!.contentOffset
                 }
                 
                 break
@@ -79,13 +77,17 @@ class HQRefreshFooterView: HQRefreshView {
                 
                 self.lastRefreshCount = self.totalDataCountInScrollView();
                 
+                
+                
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     var bottom:CGFloat = self.frame.size.height + self.originContentInset!.bottom
-                    println("\(bottom)")
                     var deltaH:CGFloat = self.heightForContentBreakView()
                     if deltaH < 0 {
                         bottom = bottom - deltaH
                     }
+                    
+                    self.lastBottomDelta = bottom - self.parentScrollView!.HQ_edgeInsetBottom;
+                    
                     var inset:UIEdgeInsets = self.parentScrollView!.contentInset;
                     inset.bottom = bottom;
                     println("\(bottom)")
@@ -98,6 +100,16 @@ class HQRefreshFooterView: HQRefreshView {
             default:
                 break
             }
+        }
+    }
+    
+    func happenOffsetY()->CGFloat
+    {
+        var deltaH:CGFloat = self.heightForContentBreakView()
+        if deltaH > 0 {
+            return   deltaH - self.originContentInset!.top;
+        } else {
+            return  -self.originContentInset!.top;
         }
     }
     
@@ -138,5 +150,6 @@ extension HQRefreshFooterView {
     func endFooterRefreshing() {
         detailLabel.text = updateTimeLabel(NSDate())
         currentViewState = RefreshState.Normal
+        previousViewState = RefreshState.Normal
     }
 }

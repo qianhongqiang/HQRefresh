@@ -26,6 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate {
         testTable.delegate = self;
         testTable.dataSource = self;
         testTable.tableFooterView = UIView()
+//        testTable.contentInset = UIEdgeInsetsMake(100, 0, 0, 0)
         self.view.addSubview(testTable)
         
         
@@ -67,13 +68,6 @@ extension ViewController : UITableViewDataSource {
         }
         
         cell!.textLabel!.text = self.dataSource?.objectAtIndex(indexPath.row) as? String
-        
-        if indexPath.row == 9 {
-            var line = UIView(frame: CGRectMake(0, 43, 320, 1))
-            line.backgroundColor = UIColor.blackColor()
-            cell!.contentView.addSubview(line)
-        }
-        
         return cell!
     }
 }
