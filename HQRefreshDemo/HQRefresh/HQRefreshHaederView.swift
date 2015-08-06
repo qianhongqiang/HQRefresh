@@ -28,6 +28,10 @@ class HQRefreshHaederView: HQRefreshView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func reframe() {
+        self.HQ_originY = -self.HQ_sizeHright - originContentInset!.top
+    }
+    
     func adjustStateWithContentOffset() {
         var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
         

@@ -23,11 +23,14 @@ class ViewController: UIViewController,UITableViewDelegate {
         self.view.backgroundColor = UIColor.yellowColor()
         
         var testTable : UITableView = UITableView(frame: self.view.bounds)
+        testTable.backgroundColor = UIColor.brownColor()
         testTable.delegate = self;
         testTable.dataSource = self;
         testTable.tableFooterView = UIView()
-//        testTable.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
+        testTable.contentInset = UIEdgeInsetsMake(30, 0, 30, 0)
         self.view.addSubview(testTable)
+        
+        println("testTable\(testTable.frame.height)")
         
         
         testTable.addRefreshHeaderWithCallBack { () -> Void in
@@ -72,6 +75,7 @@ extension ViewController : UITableViewDataSource {
         }
         
         cell!.textLabel!.text = self.dataSource?.objectAtIndex(indexPath.row) as? String
+        cell?.backgroundColor = UIColor.yellowColor()
         return cell!
     }
 }

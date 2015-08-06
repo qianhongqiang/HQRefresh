@@ -38,6 +38,8 @@ class HQRefreshView: UIView {
         detailLabel.textAlignment = NSTextAlignment.Center
         self.addSubview(self.detailLabel)
         
+        self.backgroundColor = UIColor.redColor()
+        
         self.currentViewState = RefreshState.Normal
         self.previousViewState = RefreshState.Normal
     }
