@@ -13,7 +13,7 @@ class HQRefreshFooterView: HQRefreshView {
     var lastRefreshCount:Int = 0
     var lastBottomDelta : CGFloat = 0
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if RefreshContentOffSet.isEqual(keyPath) {
             adjustStateWithContentOffset()
             let cmp : UITableView = superview as! UITableView
@@ -25,8 +25,8 @@ class HQRefreshFooterView: HQRefreshView {
     }
     
     func adjustStateWithContentOffset() {
-        var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
-        var happenOffsetY:CGFloat = self.happenOffsetY()
+        let currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
+        let happenOffsetY:CGFloat = self.happenOffsetY()
         if (currentOffsetY <= happenOffsetY) {
             return
         }
@@ -71,8 +71,8 @@ class HQRefreshFooterView: HQRefreshView {
                     })
                 }
                 
-                var deltaH:CGFloat = self.heightForContentBreakView()
-                var currentCount:Int = self.totalDataCountInScrollView()
+                let deltaH:CGFloat = self.heightForContentBreakView()
+                let currentCount:Int = self.totalDataCountInScrollView()
                 if (RefreshState.Refreshing == previousViewState && deltaH > 0  && currentCount != self.lastRefreshCount) {
                 }
                 
@@ -87,7 +87,7 @@ class HQRefreshFooterView: HQRefreshView {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     var bottom:CGFloat = self.frame.size.height + self.originContentInset!.bottom
-                    var deltaH:CGFloat = self.heightForContentBreakView()
+                    let deltaH:CGFloat = self.heightForContentBreakView()
                     if deltaH < 0 {
                         bottom = bottom - deltaH
                     }
@@ -110,7 +110,7 @@ class HQRefreshFooterView: HQRefreshView {
     }
     
     func happenOffsetY()->CGFloat {
-        var deltaH:CGFloat = self.heightForContentBreakView()
+        let deltaH:CGFloat = self.heightForContentBreakView()
         if deltaH > 0 {
             return   deltaH - self.originContentInset!.top;
         } else {
@@ -119,7 +119,7 @@ class HQRefreshFooterView: HQRefreshView {
     }
     
     func heightForContentBreakView()->CGFloat {
-        var visibleHeight:CGFloat  = self.parentScrollView!.frame.size.height - self.originContentInset!.bottom - self.originContentInset!.top;
+        let visibleHeight:CGFloat  = self.parentScrollView!.frame.size.height - self.originContentInset!.bottom - self.originContentInset!.top;
         return self.parentScrollView!.contentSize.height - visibleHeight;
     }
     
@@ -127,14 +127,14 @@ class HQRefreshFooterView: HQRefreshView {
     {
         var totalCount:Int = 0
         if self.parentScrollView is UITableView {
-            var tableView:UITableView = self.parentScrollView as! UITableView
+            let tableView:UITableView = self.parentScrollView as! UITableView
             
-            for (var i:Int = 0 ; i <  tableView.numberOfSections() ; i++){
+            for (var i:Int = 0 ; i <  tableView.numberOfSections ; i++){
                 totalCount = totalCount + tableView.numberOfRowsInSection(i)
                 
             }
         } else if self.parentScrollView is UICollectionView{
-            var collectionView:UICollectionView = self.parentScrollView as! UICollectionView
+            let collectionView:UICollectionView = self.parentScrollView as! UICollectionView
             for (var i:Int = 0 ; i <  collectionView.numberOfSections() ; i++){
                 totalCount = totalCount + collectionView.numberOfItemsInSection(i)
                 
@@ -147,7 +147,7 @@ class HQRefreshFooterView: HQRefreshView {
 
 extension HQRefreshFooterView {
     class func footer()->HQRefreshFooterView {
-        var refreshView = HQRefreshFooterView(frame: CGRectMake(0, 0, screenWidth, refreshViewHeight))
+        let refreshView = HQRefreshFooterView(frame: CGRectMake(0, 0, screenWidth, refreshViewHeight))
         return refreshView
     }
     

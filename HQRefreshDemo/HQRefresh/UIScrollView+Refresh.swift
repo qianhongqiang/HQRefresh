@@ -11,13 +11,13 @@ import UIKit
 
 extension UIScrollView {
     func addRefreshHeaderWithCallBack(callBack:(()->Void)!){
-        var refreshView : HQRefreshHaederView = HQRefreshHaederView.header()
+        let refreshView : HQRefreshHaederView = HQRefreshHaederView.header()
         refreshView.refreshCallBack = callBack
         self.addSubview(refreshView)
     }
     
     func addRefreshFooterWithCallBack(callBack:(()->Void)!){
-        var refreshView : HQRefreshFooterView = HQRefreshFooterView.footer()
+        let refreshView : HQRefreshFooterView = HQRefreshFooterView.footer()
         refreshView.refreshCallBack = callBack
         self.addSubview(refreshView)
     }
@@ -53,7 +53,7 @@ extension UIScrollView {
         }
         
         get{
-            var offsetY = self.contentOffset.y
+            let offsetY = self.contentOffset.y
             return offsetY;
         }
     }
@@ -65,7 +65,7 @@ extension UIScrollView {
         }
         
         get{
-            var offsetX = self.contentOffset.x
+            let offsetX = self.contentOffset.x
             return offsetX;
         }
     }
@@ -80,7 +80,7 @@ extension UIScrollView {
         }
         
         get{
-            var insetTop = self.contentInset.top
+            let insetTop = self.contentInset.top
             return insetTop;
         }
     }
@@ -93,7 +93,7 @@ extension UIScrollView {
         }
         
         get{
-            var insetBottom = self.contentInset.bottom
+            let insetBottom = self.contentInset.bottom
             return insetBottom;
         }
     }
@@ -106,7 +106,7 @@ extension UIScrollView {
         }
         
         get{
-            var insetLeft = self.contentInset.left
+            let insetLeft = self.contentInset.left
             return insetLeft;
         }
     }
@@ -119,7 +119,7 @@ extension UIScrollView {
         }
         
         get{
-            var insetRight = self.contentInset.right
+            let insetRight = self.contentInset.right
             return insetRight;
         }
     }

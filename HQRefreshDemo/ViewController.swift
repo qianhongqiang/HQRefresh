@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDelegate {
+class ViewController: UIViewController {
     
     var dataSource : NSMutableArray?
 
@@ -22,7 +22,7 @@ class ViewController: UIViewController,UITableViewDelegate {
         
         self.view.backgroundColor = UIColor.yellowColor()
         
-        var testTable : UITableView = UITableView(frame: self.view.bounds)
+        let testTable : UITableView = UITableView(frame: self.view.bounds)
         testTable.backgroundColor = UIColor.brownColor()
         testTable.delegate = self;
         testTable.dataSource = self;
@@ -30,7 +30,7 @@ class ViewController: UIViewController,UITableViewDelegate {
         testTable.contentInset = UIEdgeInsetsMake(30, 0, 30, 0)
         self.view.addSubview(testTable)
         
-        println("testTable\(testTable.frame.height)")
+        print("testTable\(testTable.frame.height)")
         
         
         testTable.addRefreshHeaderWithCallBack { () -> Void in
@@ -69,7 +69,7 @@ class ViewController: UIViewController,UITableViewDelegate {
 
 extension ViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("testTableViewCell") as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("testTableViewCell")
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "testTableViewCell")
         }

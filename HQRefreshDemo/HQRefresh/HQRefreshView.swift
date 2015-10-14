@@ -61,7 +61,7 @@ class HQRefreshView: UIView {
         
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -80,11 +80,11 @@ extension HQRefreshView {
     
     func updateTimeLabel(updateTime:NSDate) -> String {
         var calendar:NSCalendar = NSCalendar.currentCalendar()
-        var unitFlags:NSCalendarUnit = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay |  NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute
-        var formatter:NSDateFormatter = NSDateFormatter()
+        var unitFlags:NSCalendarUnit = [NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute]
+        let formatter:NSDateFormatter = NSDateFormatter()
         
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        var time:String = formatter.stringFromDate(updateTime)
+        let time:String = formatter.stringFromDate(updateTime)
         return time
         
     }

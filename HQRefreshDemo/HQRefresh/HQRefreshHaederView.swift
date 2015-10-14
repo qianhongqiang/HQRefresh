@@ -10,7 +10,7 @@ import UIKit
 
 class HQRefreshHaederView: HQRefreshView {
 
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if RefreshContentOffSet.isEqual(keyPath) {
             adjustStateWithContentOffset()
         }
@@ -24,7 +24,7 @@ class HQRefreshHaederView: HQRefreshView {
         self.addSubview(refreshControl!)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -33,11 +33,11 @@ class HQRefreshHaederView: HQRefreshView {
     }
     
     func adjustStateWithContentOffset() {
-        var currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
+        let currentOffsetY:CGFloat = self.parentScrollView!.contentOffset.y
         
         self.refreshControl!.percentage = CGFloat(-currentOffsetY/64)
         
-        var happenOffsetY:CGFloat = -self.originContentInset!.top
+        let happenOffsetY:CGFloat = -self.originContentInset!.top
         if (currentOffsetY >= happenOffsetY) {
             return
         }
@@ -98,7 +98,7 @@ class HQRefreshHaederView: HQRefreshView {
 
 extension HQRefreshHaederView {
     class func header()->HQRefreshHaederView {
-        var refreshView = HQRefreshHaederView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
+        let refreshView = HQRefreshHaederView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
         return refreshView
     }
     
