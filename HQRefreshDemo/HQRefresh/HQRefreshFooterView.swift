@@ -103,8 +103,6 @@ class HQRefreshFooterView: HQRefreshView {
                 break
             case .WillRefreshing:
                 break
-            default:
-                break
             }
         }
     }

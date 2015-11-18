@@ -9,7 +9,7 @@
 import UIKit
 
 class HQRefreshHaederView: HQRefreshView {
-
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if RefreshContentOffSet.isEqual(keyPath) {
             adjustStateWithContentOffset()
@@ -23,9 +23,9 @@ class HQRefreshHaederView: HQRefreshView {
         refreshControl = HQRefreshControl(frame: CGRectMake((screenWidth - 18)/2, 0, 24, 64))
         self.addSubview(refreshControl!)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     override func reframe() {
@@ -82,24 +82,22 @@ class HQRefreshHaederView: HQRefreshView {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.parentScrollView?.HQ_edgeInsetTop = refreshViewHeight + self.originContentInset!.top
                     self.parentScrollView?.HQ_offsetY = -refreshViewHeight
-                }, completion: { (completed) -> Void in
-                    self.refreshCallBack!()
+                    }, completion: { (completed) -> Void in
+                        self.refreshCallBack!()
                 })
                 break
             case .WillRefreshing:
                 break
-            default:
-                break
             }
         }
     }
-
+    
 }
 
 extension HQRefreshHaederView {
+    
     class func header()->HQRefreshHaederView {
-        let refreshView = HQRefreshHaederView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
-        return refreshView
+        return HQRefreshHaederView(frame: CGRectMake(0, -refreshViewHeight, screenWidth, refreshViewHeight))
     }
     
     func endHeaderRefreshing() {
