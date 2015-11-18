@@ -28,24 +28,24 @@ class HQRefreshControl: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        let absoluteValue = percentage * 64
+        let absoluteValue = percentage * refreshViewHeight
         
         var startP : CGPoint = CGPointZero,startR : CGFloat = 0,endP : CGPoint = CGPointZero, endR : CGFloat = 0 ,distance :CGFloat = 0
         
         if absoluteValue < 2*refreshControlOriginRadius {
-            startP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
-            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
+            startP = CGPointMake(refreshControlOriginRadius, refreshViewHeight - refreshControlOriginRadius)
+            endP = CGPointMake(refreshControlOriginRadius, refreshViewHeight - refreshControlOriginRadius)
             startR = refreshControlOriginRadius
             endR = refreshControlOriginRadius
-        }else if absoluteValue < 64 {
-            startP = CGPointMake(refreshControlOriginRadius, 64 + refreshControlOriginRadius - absoluteValue)
-            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
+        }else if absoluteValue < refreshViewHeight {
+            startP = CGPointMake(refreshControlOriginRadius, refreshViewHeight + refreshControlOriginRadius - absoluteValue)
+            endP = CGPointMake(refreshControlOriginRadius, refreshViewHeight - refreshControlOriginRadius)
             distance = distanceBetweenPoints(startP, pointB: endP)
             startR = refreshControlOriginRadius - 0.05 * distance
             endR = refreshControlOriginRadius - 0.2 * distance
         }else {
             startP = CGPointMake(refreshControlOriginRadius, refreshControlOriginRadius)
-            endP = CGPointMake(refreshControlOriginRadius, 64 - refreshControlOriginRadius)
+            endP = CGPointMake(refreshControlOriginRadius, refreshViewHeight - refreshControlOriginRadius)
             distance = distanceBetweenPoints(startP, pointB: endP)
             startR = refreshControlOriginRadius - 0.05 * distance
             endR = refreshControlOriginRadius - 0.2 * distance
